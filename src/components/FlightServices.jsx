@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ActionButton from './ActionButton.jsx';
 
-function ListFlights(props) {
+function ListFlights({ flightsList }) {
   return (
     <div>
       <h3>Available Flights</h3>
@@ -11,18 +12,21 @@ function ListFlights(props) {
           <tr>
             <th>Flight Name</th>
           </tr>
-          {props.flightsList.map(flight => {
-            return (
-              <tr key={flight.name}>{/** Why I added a Key here?? */}
-                <td>{flight.name}</td>
-              </tr>
-            );
-          })}
+          {flightsList.map(flight => (
+            <tr key={flight.name}>
+              {/** Why I added a Key here?? */}
+              <td>{flight.name}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 }
+
+ListFlights.propTypes = {
+  flightsList: PropTypes.array,
+};
 
 class FlightServices extends React.Component {
   constructor(props) {
@@ -30,16 +34,18 @@ class FlightServices extends React.Component {
     this.state = {
       flights: [],
     };
-    this.bookFlight = this.bookFlight.bind(this);
-    this.setFlightName = this.setInputAttr('flightName');
+    this.handleBookFlight = this.bookFlight.bind(this);
+    this.handleSetFlightName = this.setInputAttr('flightName');
   }
   bookFlight(event) {
     event.preventDefault();
-    const flights = this.state.flights.slice(0);
-    flights.push({ name: this.state.flightName });
-    this.setState({
-      flights,
-      flightName: '',
+    this.setState(state => {
+      const flights = state.flights.slice(0);
+      flights.push({ name: state.flightName });
+      return {
+        flights,
+        flightName: '',
+      };
     });
   }
   setInputAttr = name => event => {
@@ -58,10 +64,10 @@ class FlightServices extends React.Component {
           <input
             type="text"
             name="flightName"
-            onChange={this.setFlightName}
+            onChange={this.handleSetFlightName}
             placeholder="Enter Flight Name"
           />
-          <ActionButton text="Add Flight" onAction={this.bookFlight} />
+          <ActionButton text="Add Flight" onAction={this.handleBookFlight} />
         </form>
       </React.Fragment>
     );
