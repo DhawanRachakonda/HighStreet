@@ -6,8 +6,9 @@ module.exports = {
   entryPath: [
     'babel-polyfill',
     path.resolve(__dirname, 'src/index.jsx'),
+    path.resolve(__dirname, 'assets/css/app.css'),
   ],
   templatePath: path.resolve(__dirname, 'src/template.html'),
-  cssFolder: 'assets/css',
-  jsFolder: 'assets/js',
+  cssFolder: path.resolve(__dirname, 'assets/css'),
+  jsFolder: path.resolve(__dirname, 'assets/js'),
 };

@@ -14,7 +14,8 @@ class IfExample extends React.Component {
     return (
       <If condition={this.renderifOnly}>
         <h2>If COndition Pased</h2>
-        App Name : {process.env.name}<br/>
+        App Name : {process.env.name}
+        <br />
         Mode : {process.env.mode}
       </If>
     );
